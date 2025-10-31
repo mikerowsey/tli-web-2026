@@ -1,5 +1,20 @@
 # SiteGround Deployment Checklist
 
+## Your Infrastructure Overview
+- **Domain**: Network Solutions (DNS management)
+- **Email**: Google Workspace (@tokistar.com emails)
+- **Web Hosting**: SiteGround GoGeek Plan (paid through 2028)
+
+**GoGeek Plan Advantages:**
+- ✅ **Advanced caching** - SuperCacher for better performance
+- ✅ **Git integration** - Automated deployments possible
+- ✅ **Staging environment** - Test before going live
+- ✅ **Advanced security** - Better protection features
+- ✅ **Priority support** - Faster response times
+- ✅ **More resources** - Higher limits for traffic and storage
+
+This premium setup provides excellent performance and professional features.
+
 ## Pre-Deployment Setup
 
 - [ ] **Verify SiteGround Plan Details**
@@ -23,30 +38,46 @@ ls -la out/
 # Should see: index.html, _next/, and all static assets
 ```
 
-## SiteGround Upload Options
+## SiteGround GoGeek Upload Options
 
-### Option A: File Manager (Easiest)
+### Option A: Git Integration (Recommended for GoGeek)
+**Best choice for automated deployments:**
+1. Log into SiteGround control panel
+2. Navigate to **Git** section (available on GoGeek)
+3. Create repository connection to GitHub
+4. Set up automatic deployment from `main` branch
+5. Configure build command: `npm run build:siteground`
+
+```bash
+# GoGeek Git workflow:
+1. Push code to GitHub
+2. SiteGround automatically pulls changes
+3. Runs build command (if configured)
+4. Deploys to public_html
+```
+
+### Option B: Staging Environment (GoGeek Feature)
+**Test before going live:**
+1. Deploy to staging environment first
+2. Test functionality and performance
+3. Push to production when ready
+4. Zero downtime deployment
+
+### Option C: File Manager (Traditional)
 1. Log into SiteGround control panel
 2. Open File Manager
 3. Navigate to `public_html/`
 4. Upload contents of `out/` folder
 5. Set proper permissions (755 for folders, 644 for files)
 
-### Option B: FTP/SFTP
+### Option D: FTP/SFTP
 ```bash
-# Using FileZilla, WinSCP, or command line
+# GoGeek provides both FTP and SFTP
 # Host: your-domain.com
 # Username: your-siteground-username
 # Password: your-siteground-password
-# Port: 21 (FTP) or 22 (SFTP)
-
-# Upload all files from out/ to public_html/
+# Port: 21 (FTP) or 22 (SFTP) - SFTP recommended for security
 ```
-
-### Option C: Git Integration (If Available)
-1. Enable Git in SiteGround control panel
-2. Connect to GitHub repository
-3. Set up automatic deployment from main branch
 
 ## Post-Deployment
 
@@ -77,11 +108,20 @@ ls -la out/
 4. Upload new out/ folder contents to SiteGround
 ```
 
-### Performance Optimization
-- Enable SiteGround CDN (if available)
-- Configure caching settings
-- Optimize images before upload
-- Use SiteGround's built-in optimization tools
+### Performance Optimization (GoGeek Features)
+- **Enable SuperCacher** - SiteGround's advanced caching system
+- **Configure Speed Optimizer** - Automatic CSS/JS minification
+- **Enable CDN** - CloudFlare integration available on GoGeek
+- **Use HTTP/2** - Already enabled on GoGeek plans
+- **Optimize images** - Built-in optimization tools
+- **Enable Gzip compression** - Available in control panel
+
+### GoGeek Security Features
+- **Security hardening** - Advanced server-level protection
+- **Free SSL** - Let's Encrypt with auto-renewal
+- **Daily backups** - Automatic backup with easy restore
+- **Malware scanning** - Regular security scans
+- **IP blocking** - Protection against malicious traffic
 
 ## Troubleshooting
 
@@ -104,7 +144,19 @@ ls -la out/
 - Requirement for API routes or databases
 - Global CDN performance becomes critical
 
-### Hybrid Approach:
-- Keep main site on SiteGround
-- Use Vercel free tier for interactive tools
-- Subdomain setup: tools.tokistar.com → Vercel
+### Future Migration (If Desired):
+If you ever want to move to Vercel/Netlify, the process is simple:
+
+**Network Solutions DNS Changes:**
+```
+# Change A records to point to new hosting
+@ → New hosting provider IP
+www → New hosting provider IP
+
+# Keep MX records unchanged (Google Workspace)
+@ → aspmx.l.google.com (priority 1)
+@ → alt1.aspmx.l.google.com (priority 5)
+# etc. - Google Workspace MX records stay the same
+```
+
+**No Email Disruption**: Since Google Workspace handles email separately, changing web hosting providers won't affect your @tokistar.com emails at all.
