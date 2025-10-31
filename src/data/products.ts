@@ -1,4 +1,4 @@
-// Sample product data for the modern catalog
+// Product data for Tokistar Lighting modern catalog
 export interface Product {
   id: string
   name: string
@@ -21,6 +21,12 @@ export interface Product {
   images: {
     main: string
     gallery: string[]
+  }
+  videos?: {
+    demo?: string
+    installation?: string
+    application?: string
+    poster?: string
   }
   downloads: {
     brochure: string
@@ -49,23 +55,21 @@ export const microSeriesProducts: Product[] = [
     specifications: {
       wattage: '3W - 12W',
       lumens: '200 - 800',
-      beamAngle: '15° - 60°',
+      beamAngle: '15° - 45°',
       cri: '>90',
-      colorTemp: '2700K - 4000K',
+      colorTemp: '3000K - 4000K',
       voltage: '12V DC',
       dimensions: '2.5" x 1.5"',
       mounting: 'Track, Surface, Recessed',
-      finish: ['Silver', 'Black', 'White']
+      finish: ['Black', 'White', 'Brushed Aluminum', 'Custom']
     },
     features: [
-      'Superior craftsmanship',
-      'Slender design profile',
-      'Discreet integration',
-      'High CRI for accurate color rendering',
-      'Adjustable beam angle',
-      'Dimming compatible',
-      'Long lifespan LED',
-      'Heat management system'
+      'High CRI >90 for accurate color rendering',
+      'Adjustable beam angle and focus',
+      'Minimal heat generation',
+      'Compact design for discrete installation',
+      'Professional-grade LED drivers',
+      'Custom color temperatures available'
     ],
     images: {
       main: '/products/micro-spotlight.jpg',
@@ -74,6 +78,11 @@ export const microSeriesProducts: Product[] = [
         '/products/msp-2.jpg',
         '/products/msp-3.jpg'
       ]
+    },
+    videos: {
+      demo: '/videos/msp-demo.mp4',
+      installation: '/videos/msp-install.mp4',
+      poster: '/videos/msp-demo-poster.jpg'
     },
     downloads: {
       brochure: '/downloads/msp-brochure.pdf',
@@ -99,24 +108,22 @@ export const microSeriesProducts: Product[] = [
     ],
     specifications: {
       wattage: '5W - 15W',
-      lumens: '300 - 1200',
-      beamAngle: '20° - 50°',
+      lumens: '400 - 1200',
+      beamAngle: '20° - 60°',
       cri: '>85',
       colorTemp: '2700K - 5000K',
-      voltage: '120V / 277V',
-      dimensions: '3.2" x 2.8"',
+      voltage: '120V - 277V',
+      dimensions: '3" x 2" x 4"',
       mounting: 'Track System',
-      finish: ['Black', 'White', 'Silver']
+      finish: ['Black', 'White', 'Bronze', 'Custom']
     },
     features: [
-      'Track mounting flexibility',
-      'Adjustable positioning',
-      'Energy efficient LED',
-      'Multiple beam options',
-      'Professional dimming',
-      'Easy installation',
-      'Rotational adjustment',
-      'Commercial grade construction'
+      'Variable beam angle control',
+      'Smooth dimming capabilities',
+      'Tool-free lamp replacement',
+      '360° rotation and 90° tilt',
+      'Multiple track compatibility',
+      'Energy efficient LED technology'
     ],
     images: {
       main: '/products/micro-tracklight.jpg',
@@ -126,48 +133,51 @@ export const microSeriesProducts: Product[] = [
         '/products/mtk-3.jpg'
       ]
     },
+    videos: {
+      demo: '/videos/mtk-demo.mp4',
+      application: '/videos/mtk-application.mp4',
+      poster: '/videos/mtk-demo-poster.jpg'
+    },
     downloads: {
       brochure: '/downloads/mtk-brochure.pdf',
       spec: '/downloads/mtk-specifications.pdf',
       ies: '/downloads/mtk.ies',
       installation: '/downloads/mtk-installation.pdf'
     },
-    tags: ['LED', 'Track', 'Commercial', 'Adjustable', 'Retail', 'Hospitality']
+    tags: ['LED', 'Track', 'Retail', 'Adjustable', 'Commercial', 'Dimming']
   },
   {
     id: 'mdl',
     name: 'MicroDownlight',
     category: 'Micro Series',
     subcategory: 'Recessed Lighting',
-    description: 'Compact recessed lighting solution for subtle ambient and task illumination in architectural applications.',
+    description: 'Compact recessed downlight perfect for accent lighting in tight spaces and architectural applications.',
     applications: [
+      'Residential Interiors',
       'Hospitality Spaces',
-      'Residential Projects',
+      'Retail Displays',
       'Office Buildings',
       'Healthcare Facilities',
-      'Educational Spaces',
-      'Retail Environments'
+      'Educational Spaces'
     ],
     specifications: {
-      wattage: '4W - 18W',
-      lumens: '250 - 1500',
-      beamAngle: '25° - 80°',
+      wattage: '4W - 10W',
+      lumens: '300 - 700',
+      beamAngle: '25° - 50°',
       cri: '>80',
-      colorTemp: '2700K - 4000K',
-      voltage: '120V / 277V',
-      dimensions: '4" - 6" cutout',
-      mounting: 'Recessed Ceiling',
-      finish: ['White', 'Black', 'Aluminum']
+      colorTemp: '3000K - 4000K',
+      voltage: '120V',
+      dimensions: '2" diameter',
+      mounting: 'Recessed',
+      finish: ['White', 'Black', 'Brushed Nickel']
     },
     features: [
-      'Compact recessed design',
-      'Multiple beam angles',
-      'Dimming compatibility',
+      'Ultra-slim profile design',
       'Easy retrofit installation',
-      'Thermal management',
-      'Long LED lifespan',
-      'Multiple trim options',
-      'IC rated housing'
+      'Excellent thermal management',
+      'Long 50,000+ hour lifespan',
+      'IC rated for insulation contact',
+      'Wet location rated options'
     ],
     images: {
       main: '/products/micro-downlight.jpg',
@@ -183,164 +193,16 @@ export const microSeriesProducts: Product[] = [
       ies: '/downloads/mdl.ies',
       installation: '/downloads/mdl-installation.pdf'
     },
-    tags: ['LED', 'Recessed', 'Hospitality', 'Residential', 'Dimming', 'Retrofit']
-  },
-  {
-    id: 'mfl',
-    name: 'MicroFootlight',
-    category: 'Micro Series',
-    subcategory: 'Pathway Lighting',
-    description: 'Low-profile lighting solution for pathway illumination and architectural accent in landscape applications.',
-    applications: [
-      'Landscape Design',
-      'Pathway Lighting',
-      'Architectural Accent',
-      'Safety Lighting',
-      'Garden Illumination',
-      'Outdoor Hospitality'
-    ],
-    specifications: {
-      wattage: '2W - 8W',
-      lumens: '100 - 600',
-      beamAngle: '30° - 120°',
-      cri: '>70',
-      colorTemp: '2700K - 3000K',
-      voltage: '12V DC',
-      dimensions: '3" x 1.5"',
-      mounting: 'In-ground, Surface',
-      finish: ['Bronze', 'Black', 'Stainless Steel']
-    },
-    features: [
-      'Weather resistant design',
-      'Low profile installation',
-      'Multiple mounting options',
-      'Vandal resistant',
-      'Long lifespan LED',
-      'Energy efficient',
-      'Easy maintenance',
-      'Architectural integration'
-    ],
-    images: {
-      main: '/products/micro-footlight.jpg',
-      gallery: [
-        '/products/mfl-1.jpg',
-        '/products/mfl-2.jpg',
-        '/products/mfl-3.jpg'
-      ]
-    },
-    downloads: {
-      brochure: '/downloads/mfl-brochure.pdf',
-      spec: '/downloads/mfl-specifications.pdf',
-      ies: '/downloads/mfl.ies',
-      installation: '/downloads/mfl-installation.pdf'
-    },
-    tags: ['LED', 'Outdoor', 'Landscape', 'Pathway', 'Weather Resistant', 'Low Profile']
-  },
-  {
-    id: 'mlc',
-    name: 'MicroLight Cannon',
-    category: 'Micro Series',
-    subcategory: 'High Output Accent',
-    description: 'High-performance accent lighting with exceptional light output and precision beam control for demanding applications.',
-    applications: [
-      'Architectural Highlighting',
-      'Monument Lighting',
-      'Large Display Areas',
-      'Commercial Facades',
-      'Art Installation',
-      'Feature Lighting'
-    ],
-    specifications: {
-      wattage: '10W - 25W',
-      lumens: '800 - 2500',
-      beamAngle: '10° - 40°',
-      cri: '>85',
-      colorTemp: '2700K - 4000K',
-      voltage: '120V / 277V',
-      dimensions: '4.5" x 3.2"',
-      mounting: 'Track, Surface, Yoke',
-      finish: ['Black', 'Bronze', 'Silver']
-    },
-    features: [
-      'High light output',
-      'Precision beam control',
-      'Professional grade construction',
-      'Multiple mounting options',
-      'Heat sink design',
-      'Adjustable positioning',
-      'Commercial dimming',
-      'Weather resistant options'
-    ],
-    images: {
-      main: '/products/micro-light-cannon.jpg',
-      gallery: [
-        '/products/mlc-1.jpg',
-        '/products/mlc-2.jpg',
-        '/products/mlc-3.jpg'
-      ]
-    },
-    downloads: {
-      brochure: '/downloads/mlc-brochure.pdf',
-      spec: '/downloads/mlc-specifications.pdf',
-      ies: '/downloads/mlc.ies',
-      installation: '/downloads/mlc-installation.pdf'
-    },
-    tags: ['LED', 'High Output', 'Architectural', 'Commercial', 'Precision', 'Monument']
-  },
-  {
-    id: 'mpd',
-    name: 'MicroPinhole Downlight',
-    category: 'Micro Series',
-    subcategory: 'Specialty Recessed',
-    description: 'Ultra-discrete pinhole downlight providing minimal visual impact while delivering precise illumination.',
-    applications: [
-      'Luxury Residential',
-      'High-end Hospitality',
-      'Museum Display',
-      'Retail Luxury',
-      'Executive Offices',
-      'Fine Dining'
-    ],
-    specifications: {
-      wattage: '3W - 10W',
-      lumens: '200 - 800',
-      beamAngle: '15° - 35°',
-      cri: '>90',
-      colorTemp: '2700K - 3000K',
-      voltage: '12V DC',
-      dimensions: '1" aperture',
-      mounting: 'Recessed Ceiling',
-      finish: ['White', 'Black', 'Brushed Aluminum']
-    },
-    features: [
-      'Ultra-small aperture',
-      'Minimal visual impact',
-      'High CRI performance',
-      'Precise beam control',
-      'Luxury applications',
-      'Easy installation',
-      'Trim-less design option',
-      'Superior optics'
-    ],
-    images: {
-      main: '/products/micro-pinhole.jpg',
-      gallery: [
-        '/products/mpd-1.jpg',
-        '/products/mpd-2.jpg',
-        '/products/mpd-3.jpg'
-      ]
-    },
-    downloads: {
-      brochure: '/downloads/mpd-brochure.pdf',
-      spec: '/downloads/mpd-specifications.pdf',
-      ies: '/downloads/mpd.ies',
-      installation: '/downloads/mpd-installation.pdf'
-    },
-    tags: ['LED', 'Pinhole', 'Luxury', 'Museum', 'High CRI', 'Discrete']
+    tags: ['LED', 'Recessed', 'Residential', 'Commercial', 'IC Rated', 'Retrofit']
   }
 ]
 
-// Filter and search utilities
-export const categories = Array.from(new Set(microSeriesProducts.map(p => p.subcategory)))
-export const applications = Array.from(new Set(microSeriesProducts.flatMap(p => p.applications)))
-export const finishes = Array.from(new Set(microSeriesProducts.flatMap(p => p.specifications.finish)))
+// Extract unique categories and applications for filtering
+export const categories = [...new Set(microSeriesProducts.map(p => p.category))]
+
+export const applications = [
+  ...new Set(microSeriesProducts.flatMap(p => p.applications))
+].sort()
+
+// Export all products for the catalog
+export const allProducts = microSeriesProducts
