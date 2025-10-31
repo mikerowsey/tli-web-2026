@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:siteground": "next build && echo 'Upload the out/ folder contents to your SiteGround public_html directory'",
     "start": "next start",
     "lint": "next lint"
   },
