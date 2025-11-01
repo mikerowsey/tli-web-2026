@@ -256,19 +256,18 @@ export default function ModernProductGuide() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-50 overflow-y-auto"
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
             onClick={() => setSelectedProduct(null)}
           >
-            <div className="min-h-screen flex items-center justify-center p-4">
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white rounded-xl max-w-4xl w-full"
-                onClick={(e) => e.stopPropagation()}
-              >
-              {/* Modal Header */}
-              <div className="sticky top-0 bg-white border-b border-neutral-200 px-6 py-4 rounded-t-xl">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header - Fixed */}
+              <div className="flex-shrink-0 bg-white border-b border-neutral-200 px-6 py-4 rounded-t-xl">
                 <div className="flex items-center justify-between">
                   <div>
                     <h2 className="text-2xl font-display font-bold text-neutral-900">
@@ -285,7 +284,8 @@ export default function ModernProductGuide() {
                 </div>
               </div>
 
-              <div className="p-6">
+              {/* Modal Content - Scrollable */}
+              <div className="flex-1 overflow-y-auto p-6">
                 <div className="grid lg:grid-cols-2 gap-8">
                   {/* Product Image and Description */}
                   <div className="space-y-6">
@@ -545,8 +545,7 @@ export default function ModernProductGuide() {
                   </div>
                 </div>
               </div>
-              </motion.div>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
