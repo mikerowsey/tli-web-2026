@@ -60,11 +60,11 @@ npm run dev
 # Build for production
 npm run build
 
-# Start production server
-npm start
+# Create deployment package
+npm run deploy
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the redesigned Tokistar website.
+Open [http://localhost:3000](http://localhost:3000) to view the redesigned Tokistar website locally.
 
 ## 🎨 Design System
 
@@ -82,12 +82,20 @@ Open [http://localhost:3000](http://localhost:3000) to view the redesigned Tokis
 - Consistent card layouts with hover effects
 - Responsive grid systems for product catalogs
 
-## 📁 Key Files
+## 📁 Key Files & Documentation
 
-- `.github/copilot-instructions.md` - AI agent guidance for project
+**Core Files:**
 - `tailwind.config.js` - Custom design system configuration
 - `next.config.js` - Image optimization and performance settings
 - `src/components/` - Reusable UI components for lighting products
+- `scripts/deploy.sh` - Deployment script for SiteGround
+
+**Documentation:**
+- `DEPLOYMENT-GUIDE.md` - Complete deployment guide (rowsey.org → tokistar.com)
+- `PROJECT-STATUS.md` - Current project status and roadmap
+- `FLIPPINGBOOK-ANALYSIS.md` - Analysis of current vs new catalog
+- `SALES-AGENTS-ANALYSIS.md` - Sales agents feature analysis
+- `.github/copilot-instructions.md` - AI agent guidance
 
 ## 🎯 Development Focus
 
@@ -98,7 +106,25 @@ This redesign specifically targets:
 4. **Creating mobile-responsive product catalogs**
 5. **Professional aesthetics** appropriate for architectural lighting industry
 
-## 📞 Tokistar Contact
+## � Deployment Workflow
+
+**Development Site**: rowsey.org (testing and iteration)  
+**Production Site**: tokistar.com (live customer-facing site)
+
+```bash
+# Deploy to development (rowsey.org)
+npm run deploy
+# Upload to SiteGround → rowsey.org
+
+# Deploy to production (tokistar.com)
+# 1. Update scripts/deploy.sh domain to tokistar.com
+# 2. Run: npm run deploy
+# 3. Upload to SiteGround → tokistar.com
+```
+
+**See `DEPLOYMENT-GUIDE.md` for complete instructions.**
+
+## �📞 Tokistar Contact
 
 - **Phone**: (714) 772-7005
 - **Email**: info@tokistar.com

@@ -1,9 +1,9 @@
-# Project Status & Continuation Guide
+# Project Status
 
-## 🎯 **Current Status: Ready for Home Development**
+## 🎯 **Current Status: Ready for Development Deployment**
 
 **Last Updated**: October 31, 2025  
-**Commit**: b59c5ae - "feat: Add Sales Agents Directory & Multi-Site Deployment"  
+**Phase**: Development on rowsey.org  
 **Repository**: https://github.com/mikerowsey/tli-web-2026  
 
 ---
@@ -35,26 +35,26 @@
 - **Mobile-responsive** menu system
 
 ### ✅ **Deployment Infrastructure**
-- **Multi-site deployment strategy** for SiteGround
-- **Automated deployment scripts** (`npm run deploy:dev/staging/production`)
-- **Comprehensive setup guides** for dev/staging/production workflow
-- **Ready for SiteGround subdomain deployment**
+- **Simple deployment workflow** for SiteGround
+- **Single deployment script** (`npm run deploy`)
+- **Two-environment strategy**: rowsey.org (dev) → tokistar.com (prod)
+- **Comprehensive deployment guide** (`DEPLOYMENT-GUIDE.md`)
 
 ---
 
-## 🚀 **Ready to Deploy**
+## 🚀 **Deployment Strategy**
 
-### **Development Package Available**
-- **Built package**: `dist/tokistar-dev-20251031_154927.zip` (304KB)
-- **Upload target**: SiteGround `/public_html/dev/` folder
-- **Test URL**: `https://dev.tokistar.com` (after subdomain creation)
+### **Development Site: rowsey.org**
+- **Purpose**: Safe testing, iteration, client reviews
+- **Status**: Ready to deploy
+- **URL**: https://rowsey.org (replacing WordPress)
+- **Deploy**: `npm run deploy` → Upload to rowsey.org
 
-### **Deployment Commands Ready**
-```bash
-npm run deploy:dev        # Development deployment
-npm run deploy:staging    # Staging deployment  
-npm run deploy:production # Production deployment
-```
+### **Production Site: tokistar.com**
+- **Purpose**: Live customer-facing site
+- **Status**: Will deploy after rowsey.org testing complete
+- **URL**: https://tokistar.com
+- **Deploy**: Update domain in script → Upload to tokistar.com
 
 ---
 
@@ -92,31 +92,31 @@ tli-web-2026/
 
 ---
 
-## 🔄 **Next Steps for Home Development**
+## 🔄 **Next Steps**
 
-### **Immediate (First Session)**
-1. **Clone repository** on home setup
-2. **Install dependencies**: `npm install`
-3. **Start development**: `npm run dev`
-4. **Test current features** at `localhost:3000`
+### **Phase 1: Deploy to rowsey.org** (Immediate)
+1. **Clear WordPress** from rowsey.org on SiteGround
+2. **Build and deploy**: `npm run deploy`
+3. **Upload to rowsey.org** via SiteGround File Manager
+4. **Test thoroughly** at https://rowsey.org
 
-### **Content Enhancement**
+### **Phase 2: Content Enhancement** (Development)
 1. **Add real product images** to `/public/products/`
 2. **Update product data** with actual Tokistar specifications
 3. **Add real sales agent information** to `salesAgents.ts`
 4. **Include actual videos** in `/public/videos/`
 
-### **Feature Expansion**
+### **Phase 3: Feature Expansion** (Optional)
 1. **About page** development
 2. **Contact page** with forms
 3. **Additional product lines** beyond Micro Series
 4. **Blog/news section** (optional)
 
-### **Production Deployment**
-1. **Create SiteGround subdomain** for testing
-2. **Deploy development version** for review
-3. **Final content review** and optimization
-4. **Production deployment** when ready
+### **Phase 4: Production Deployment** (When Ready)
+1. **Backup tokistar.com** WordPress site
+2. **Update deployment domain** to tokistar.com
+3. **Build and deploy** to production
+4. **Test and monitor** live site
 
 ---
 
@@ -124,20 +124,19 @@ tli-web-2026/
 
 ```bash
 # Development
-npm run dev                    # Start development server
-npm run build                  # Build for production
-npm run lint                   # Run linting
+npm run dev                   # Start development server (localhost:3000)
+npm run build                 # Build for production
+npm run lint                  # Run linting
 
 # Deployment
-npm run deploy:dev            # Package for development deployment
-npm run deploy:staging        # Package for staging deployment
-npm run deploy:production     # Package for production deployment
+npm run deploy                # Create deployment package for SiteGround
 
 # Git workflow
-git pull origin main          # Get latest changes
+git status                    # Check current status
 git add .                     # Stage changes
 git commit -m "message"       # Commit changes
 git push origin main          # Push to GitHub
+git pull origin main          # Get latest changes
 ```
 
 ---
@@ -163,13 +162,14 @@ git push origin main          # Push to GitHub
 
 ---
 
-## 📚 **Documentation Available**
+## 📚 **Documentation**
 
-- **`QUICK-SETUP.md`**: Fast setup for SiteGround deployment
-- **`MULTI-SITE-DEPLOYMENT.md`**: Complete deployment strategy
-- **`SITEGROUND-SUBDOMAIN-SETUP.md`**: Step-by-step subdomain setup
-- **`SALES-AGENTS-ANALYSIS.md`**: Analysis of current vs. new implementation
+- **`DEPLOYMENT-GUIDE.md`**: Complete deployment guide for rowsey.org and tokistar.com
+- **`README.md`**: Project overview and quick start
+- **`FLIPPINGBOOK-ANALYSIS.md`**: Why we're replacing the old catalog
+- **`SALES-AGENTS-ANALYSIS.md`**: Sales agents feature analysis
+- **`SWITCHING-TO-PRODUCTION.md`**: Guide for moving from rowsey.org to tokistar.com
 
 ---
 
-**🏠 Ready for seamless continuation at home! All changes committed and pushed to GitHub.**
+**✅ Ready to deploy! Follow `DEPLOYMENT-GUIDE.md` to get started on rowsey.org.**
