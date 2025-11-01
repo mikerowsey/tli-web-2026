@@ -1,7 +1,7 @@
 // Example: Modern Product Selection Guide Component
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Filter, Download, ExternalLink, X, Eye, FileText, Zap } from 'lucide-react'
 import Image from 'next/image'
@@ -14,15 +14,28 @@ export default function ModernProductGuide() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [showFilters, setShowFilters] = useState(false)
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedProduct) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [selectedProduct])
+
   const filteredProducts = useMemo(() => {
     return microSeriesProducts.filter(product => {
       const matchesSearch = searchTerm === '' || 
+        product.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.applications.some(app => app.toLowerCase().includes(searchTerm.toLowerCase())) ||
         product.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
       
-      const matchesCategory = selectedCategory === 'all' || product.subcategory === selectedCategory
+      const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
       const matchesApplication = selectedApplication === 'all' || 
         product.applications.includes(selectedApplication)
       
@@ -134,6 +147,13 @@ export default function ModernProductGuide() {
               >
                 <div className="relative h-56 overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10" />
+                  <div className="absolute top-4 left-4 z-20">
+                    <div className="bg-primary-600/90 px-3 py-2 rounded-lg backdrop-blur-sm">
+                      <h3 className="text-xl font-display font-semibold text-white">
+                        {product.name}
+                      </h3>
+                    </div>
+                  </div>
                   <div className="absolute top-4 right-4 z-20">
                     <span className="bg-white text-primary-700 font-medium text-xs px-2 py-1 rounded-full">
                       {product.subcategory}
@@ -147,12 +167,17 @@ export default function ModernProductGuide() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute bottom-4 left-4 z-20">
-                    <h3 className="text-xl font-display font-semibold text-white mb-1">
-                      {product.name}
-                    </h3>
-                    <p className="text-neutral-200 text-sm">
+                    <span className="bg-black/70 text-white font-medium text-xs px-2 py-1 rounded">
                       {product.specifications.wattage} • {product.specifications.lumens} lm
-                    </p>
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 right-4 z-20 flex gap-2">
+                    <span className="bg-black/70 text-white font-medium text-xs px-2 py-1 rounded">
+                      {product.specifications.ipRating}
+                    </span>
+                    <span className="bg-black/70 text-white font-medium text-xs px-2 py-1 rounded">
+                      {product.specifications.cri} CRI
+                    </span>
                   </div>
                 </div>
 
@@ -161,46 +186,22 @@ export default function ModernProductGuide() {
                     {product.description}
                   </p>
 
-                  <div className="space-y-3">
-                    <div>
-                      <h4 className="text-sm font-semibold text-neutral-900 mb-2">Key Specifications</h4>
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-neutral-500">Wattage:</span>
-                          <span>{product.specifications.wattage}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-neutral-500">Lumens:</span>
-                          <span>{product.specifications.lumens}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-neutral-500">Beam:</span>
-                          <span>{product.specifications.beamAngle}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-neutral-500">CRI:</span>
-                          <span>{product.specifications.cri}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className="text-sm font-semibold text-neutral-900 mb-2">Applications</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {product.applications.slice(0, 3).map((app, i) => (
-                          <span
-                            key={i}
-                            className="px-2 py-1 bg-neutral-100 text-neutral-600 text-xs rounded-md"
-                          >
-                            {app}
-                          </span>
-                        ))}
-                        {product.applications.length > 3 && (
-                          <span className="px-2 py-1 bg-neutral-100 text-neutral-600 text-xs rounded-md">
-                            +{product.applications.length - 3} more
-                          </span>
-                        )}
-                      </div>
+                  <div>
+                    <h4 className="text-sm font-semibold text-neutral-900 mb-2">Applications</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {product.applications.slice(0, 3).map((app, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-1 bg-neutral-100 text-neutral-600 text-xs rounded-md"
+                        >
+                          {app}
+                        </span>
+                      ))}
+                      {product.applications.length > 3 && (
+                        <span className="px-2 py-1 bg-neutral-100 text-neutral-600 text-xs rounded-md">
+                          +{product.applications.length - 3} more
+                        </span>
+                      )}
                     </div>
                   </div>
 
@@ -209,9 +210,15 @@ export default function ModernProductGuide() {
                       <Eye className="h-3 w-3" />
                       View Details
                     </button>
-                    <button className="px-3 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-sm font-medium rounded-md transition-colors duration-200">
+                    <a
+                      href={product.downloads.brochure}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="px-3 py-2 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-sm font-medium rounded-md transition-colors duration-200 flex items-center justify-center"
+                    >
                       <Download className="h-3 w-3" />
-                    </button>
+                    </a>
                   </div>
                 </div>
               </motion.div>
@@ -249,16 +256,17 @@ export default function ModernProductGuide() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-black/50 z-50 overflow-y-auto"
             onClick={() => setSelectedProduct(null)}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
+            <div className="min-h-screen flex items-center justify-center p-4">
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                className="bg-white rounded-xl max-w-4xl w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
               {/* Modal Header */}
               <div className="sticky top-0 bg-white border-b border-neutral-200 px-6 py-4 rounded-t-xl">
                 <div className="flex items-center justify-between">
@@ -290,6 +298,23 @@ export default function ModernProductGuide() {
                         sizes="(max-width: 1024px) 100vw, 50vw"
                       />
                     </div>
+
+                    {/* Product Video Button */}
+                    {selectedProduct.videos?.demo && (
+                      <div>
+                        <a
+                          href={selectedProduct.videos.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors text-sm font-medium"
+                        >
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
+                          </svg>
+                          Watch Product Demo
+                        </a>
+                      </div>
+                    )}
                     
                     <div>
                       <h3 className="text-lg font-semibold mb-3">Description</h3>
@@ -311,73 +336,154 @@ export default function ModernProductGuide() {
                     </div>
                   </div>
 
-                  {/* Specifications and Applications */}
+                  {/* Specifications */}
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-semibold mb-4">Applications</h3>
-                      <div className="grid grid-cols-2 gap-2">
-                        {selectedProduct.applications.map((app, index) => (
-                          <span
-                            key={index}
-                            className="px-3 py-2 bg-primary-50 text-primary-700 text-sm rounded-md text-center"
-                          >
-                            {app}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div>
                       <h3 className="text-lg font-semibold mb-4">Specifications</h3>
-                      <div className="bg-neutral-50 rounded-lg p-4 space-y-3">
-                        <div className="grid grid-cols-2 gap-4 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">Wattage:</span>
-                            <span className="font-medium">{selectedProduct.specifications.wattage}</span>
+                      <div className="bg-neutral-50 rounded-lg p-4 space-y-4">
+                        {/* Power Consumption */}
+                        <div>
+                          <h4 className="text-xs font-semibold text-neutral-600 uppercase tracking-wider mb-2">Power Consumption</h4>
+                          <div className="text-sm">
+                            <span className="font-semibold text-neutral-900">
+                              {selectedProduct.specifications.wattage} @ {selectedProduct.specifications.driverType === 'CV' ? selectedProduct.specifications.voltage : (selectedProduct.specifications.current || selectedProduct.specifications.voltage)}
+                            </span>
+                            <span className="ml-2 text-neutral-600">
+                              ({selectedProduct.specifications.driverType === 'CV' ? 'Constant Voltage' : 'Constant Current'})
+                            </span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">Lumens:</span>
-                            <span className="font-medium">{selectedProduct.specifications.lumens}</span>
+                        </div>
+
+                        {/* Light Output */}
+                        <div className="pt-3 border-t border-neutral-200">
+                          <h4 className="text-xs font-semibold text-neutral-600 uppercase tracking-wider mb-2">Lumens, CRI</h4>
+                          <div className="text-sm">
+                            <span className="font-semibold text-neutral-900">[{selectedProduct.specifications.lumens} lumens] [{selectedProduct.specifications.cri.replace('>', '')} CRI]</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">Beam Angle:</span>
-                            <span className="font-medium">{selectedProduct.specifications.beamAngle}</span>
+                        </div>
+
+                        {/* Beam Angle */}
+                        <div className="pt-3 border-t border-neutral-200">
+                          <h4 className="text-xs font-semibold text-neutral-600 uppercase tracking-wider mb-2">Beam Angle</h4>
+                          <div className="text-sm">
+                            <span className="font-semibold text-neutral-900">{selectedProduct.specifications.beamAngle}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">CRI:</span>
-                            <span className="font-medium">{selectedProduct.specifications.cri}</span>
+                        </div>
+
+                        {/* Color Temperature Visual Display */}
+                        <div className="pt-3 border-t border-neutral-200">
+                          <div className="mb-3">
+                            <span className="text-neutral-700 text-sm font-medium">LED Color</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">Color Temp:</span>
-                            <span className="font-medium">{selectedProduct.specifications.colorTemp}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">Voltage:</span>
-                            <span className="font-medium">{selectedProduct.specifications.voltage}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">Dimensions:</span>
-                            <span className="font-medium">{selectedProduct.specifications.dimensions}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-neutral-500">Mounting:</span>
-                            <span className="font-medium">{selectedProduct.specifications.mounting}</span>
+                          <div className="flex gap-2">
+                            {selectedProduct.specifications.colorTemp.includes('2000K') || selectedProduct.specifications.colorTemp.includes('20K') ? (
+                              <div className="w-12 h-12 rounded border border-neutral-300 flex items-center justify-center text-xs font-medium" style={{backgroundColor: '#ff8c00'}} title="2000K">
+                                2000K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('2200K') || selectedProduct.specifications.colorTemp.includes('22K') ? (
+                              <div className="w-12 h-12 rounded border border-neutral-300 flex items-center justify-center text-xs font-medium" style={{backgroundColor: '#ffa040'}} title="2200K">
+                                2200K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('2400K') || selectedProduct.specifications.colorTemp.includes('24K') ? (
+                              <div className="w-12 h-12 rounded border border-neutral-300 flex items-center justify-center text-xs font-medium" style={{backgroundColor: '#ffb060'}} title="2400K">
+                                2400K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('2700K') || selectedProduct.specifications.colorTemp.includes('27K') ? (
+                              <div className="w-12 h-12 rounded border border-neutral-300 flex items-center justify-center text-xs font-medium" style={{backgroundColor: '#ffddb3'}} title="2700K">
+                                2700K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('3000K') || selectedProduct.specifications.colorTemp.includes('30K') ? (
+                              <div className="w-12 h-12 rounded border border-neutral-300 flex items-center justify-center text-xs font-medium" style={{backgroundColor: '#ffe8c8'}} title="3000K">
+                                3000K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('3500K') || selectedProduct.specifications.colorTemp.includes('35K') ? (
+                              <div className="w-12 h-12 rounded border border-neutral-300 flex items-center justify-center text-xs font-medium" style={{backgroundColor: '#ffe0c0'}} title="3500K">
+                                3500K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('4000K') || selectedProduct.specifications.colorTemp.includes('40K') ? (
+                              <div className="w-12 h-12 rounded border border-neutral-300 flex items-center justify-center text-xs font-medium" style={{backgroundColor: '#fff0e0'}} title="4000K">
+                                4000K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('4500K') || selectedProduct.specifications.colorTemp.includes('45K') ? (
+                              <div className="w-12 h-12 rounded border border-neutral-300 flex items-center justify-center text-xs font-medium" style={{backgroundColor: '#fffaf0'}} title="4500K">
+                                4500K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('5000K') || selectedProduct.specifications.colorTemp.includes('50K') ? (
+                              <div className="w-12 h-12 rounded bg-white border border-neutral-300 flex items-center justify-center text-xs font-medium" title="5000K">
+                                5000K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('5500K') || selectedProduct.specifications.colorTemp.includes('55K') ? (
+                              <div className="w-12 h-12 rounded bg-white border border-neutral-300 flex items-center justify-center text-xs font-medium" title="5500K">
+                                5500K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('6000K') || selectedProduct.specifications.colorTemp.includes('60K') ? (
+                              <div className="w-12 h-12 rounded bg-white border border-neutral-300 flex items-center justify-center text-xs font-medium" title="6000K">
+                                6000K
+                              </div>
+                            ) : null}
+                            {selectedProduct.specifications.colorTemp.includes('6500K') || selectedProduct.specifications.colorTemp.includes('65K') ? (
+                              <div className="w-12 h-12 rounded bg-white border border-neutral-300 flex items-center justify-center text-xs font-medium" title="6500K">
+                                6500K
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                         
+                        {/* Fixture Color Visual Display */}
                         <div className="pt-3 border-t border-neutral-200">
-                          <div className="flex justify-between items-center">
-                            <span className="text-neutral-500 text-sm">Available Finishes:</span>
-                            <div className="flex gap-2">
-                              {selectedProduct.specifications.finish.map((finish, index) => (
-                                <span
+                          <div className="mb-3">
+                            <span className="text-neutral-700 text-sm font-medium">Fixture Color</span>
+                          </div>
+                          <div className="flex gap-2">
+                            {selectedProduct.specifications.finish.map((finish, index) => {
+                              const colorMap: Record<string, string> = {
+                                'Black': '#1a1a1a',
+                                'White': '#ffffff',
+                                'Silver': '#c0c0c0',
+                                'Bronze': '#8b6f47',
+                                'Satin Aluminum': '#b8b8b0',
+                                'Chrome': '#e8e8e8',
+                                'Brass': '#b5a642',
+                                'Copper': '#b87333',
+                                'Gold': '#d4af37',
+                                'Matte Black': '#2d2d2d',
+                                'Satin White': '#f5f5f5',
+                                'Custom': '#9ca3af'
+                              }
+                              const bgColor = colorMap[finish] || '#9ca3af'
+                              const textColor = ['Black', 'Bronze', 'Brass', 'Copper', 'Matte Black'].includes(finish) ? 'white' : 'black'
+                              
+                              return (
+                                <div
                                   key={index}
-                                  className="px-2 py-1 bg-white border border-neutral-200 text-xs rounded"
+                                  className="px-3 py-2 rounded border-2 border-neutral-300 flex items-center justify-center text-xs font-medium whitespace-nowrap"
+                                  style={{backgroundColor: bgColor, color: textColor}}
+                                  title={finish}
                                 >
                                   {finish}
-                                </span>
-                              ))}
-                            </div>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        </div>
+
+                        {/* Environmental Rating */}
+                        <div className="pt-3 border-t border-neutral-200">
+                          <h4 className="text-xs font-semibold text-neutral-600 uppercase tracking-wider mb-2">Environmental Rating</h4>
+                          <div className="text-sm">
+                            <span className="font-semibold text-neutral-900">{selectedProduct.specifications.ipRating}</span>
+                            <span className="text-neutral-600">, </span>
+                            <span className="font-semibold text-neutral-900">{selectedProduct.specifications.locationRating}</span>
                           </div>
                         </div>
                       </div>
@@ -406,12 +512,13 @@ export default function ModernProductGuide() {
                         </a>
                         <a
                           href={selectedProduct.downloads.ies}
+                          download
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-2 px-4 py-3 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors text-sm"
                         >
-                          <ExternalLink className="h-4 w-4" />
-                          IES File
+                          <Download className="h-4 w-4" />
+                          IES Files (ZIP)
                         </a>
                         <a
                           href={selectedProduct.downloads.installation}
@@ -420,20 +527,26 @@ export default function ModernProductGuide() {
                           className="flex items-center gap-2 px-4 py-3 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors text-sm"
                         >
                           <FileText className="h-4 w-4" />
-                          Installation
+                          Installation Guide
                         </a>
                       </div>
                     </div>
 
                     <div className="pt-4 border-t border-neutral-200">
-                      <button className="w-full bg-accent-500 hover:bg-accent-600 text-white py-3 rounded-lg font-medium transition-colors">
-                        Request Quote for {selectedProduct.name}
-                      </button>
+                      <a
+                        href="/downloads/tokistar-warranty.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full bg-accent-500 hover:bg-accent-600 text-white py-3 rounded-lg font-medium transition-colors text-center"
+                      >
+                        Limited Warranty
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

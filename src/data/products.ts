@@ -1,4 +1,20 @@
 // Product data for Tokistar Lighting modern catalog
+
+// Master category list - add your main product categories here
+export const mainCategories = [
+  'Advantage Series',
+  'Cable Systems',
+  'Exhibitor Series',
+  'Focal Series',
+  'Micro Series',
+  'Light Veil',
+  'Lightstrings',
+  'Reveler',
+  'Tapelight',
+  'Tokilux',
+  'Tokilum',
+]
+
 export interface Product {
   id: string
   name: string
@@ -12,9 +28,11 @@ export interface Product {
     beamAngle: string
     cri: string
     colorTemp: string
-    voltage: string
-    dimensions: string
-    mounting: string
+    voltage: string // For CV systems - e.g., "24V DC"
+    current?: string // For CC systems - e.g., "350mA"
+    driverType: 'CV' | 'CC' // Constant Voltage or Constant Current
+    locationRating: 'Dry Location' | 'Damp Location' | 'Wet Location' // Installation location
+    ipRating: string
     finish: string[]
   }
   features: string[]
@@ -40,7 +58,7 @@ export interface Product {
 export const microSeriesProducts: Product[] = [
   {
     id: 'msp',
-    name: 'MicroSpotlight',
+    name: 'Micro Spotlight',
     category: 'Micro Series',
     subcategory: 'Showcase Lighting',
     description: 'The quality of light and superior craftsmanship of Micro Spotlight make it ideal for highlighting fine jewelry and valuable artifacts in showcases and displays.',
@@ -56,11 +74,12 @@ export const microSeriesProducts: Product[] = [
       wattage: '1.2W',
       lumens: '80 - 97',
       beamAngle: '16°, 24°, 30°',
-      cri: '>85',
-      colorTemp: '27K - 50K',
+      cri: '85',
+      colorTemp: '2700K, 3000K, 4000K, 5000K',
       voltage: '5V DC',
-      dimensions: '12.5mm x 25mm',
-      mounting: 'Recessed Socket',
+      driverType: 'CV',
+      locationRating: 'Dry Location',
+      ipRating: 'IP20',
       finish: ['Black', 'Silver']
     },
     features: [
@@ -87,14 +106,14 @@ export const microSeriesProducts: Product[] = [
     downloads: {
       brochure: '/downloads/msp-brochure.pdf',
       spec: '/downloads/msp-specifications.pdf',
-      ies: '/downloads/msp.ies',
+      ies: '/downloads/msp-ies.zip',
       installation: '/downloads/msp-installation.pdf'
     },
     tags: ['LED', 'Accent', 'Museum', 'Jewelry', 'High CRI', 'Adjustable']
   },
   {
     id: 'mtk',
-    name: 'MicroTracklight',
+    name: 'Micro Tracklight',
     category: 'Micro Series',
     subcategory: 'Track Lighting',
     description: 'Versatile track lighting solution providing dynamic accent and display lighting with professional-grade performance.',
@@ -107,15 +126,16 @@ export const microSeriesProducts: Product[] = [
       'Office Spaces'
     ],
     specifications: {
-      wattage: '5W - 15W',
-      lumens: '400 - 1200',
-      beamAngle: '20° - 60°',
-      cri: '>85',
-      colorTemp: '2700K - 5000K',
-      voltage: '120V - 277V',
-      dimensions: '3" x 2" x 4"',
-      mounting: 'Track System',
-      finish: ['Black', 'White', 'Bronze', 'Custom']
+      wattage: '1.6W',
+      lumens: '80 - 105',
+      beamAngle: '16°, 25°, 40°',
+      cri: '90',
+      colorTemp: '2700K, 3000K, 3500K, 4000K',
+      voltage: '24V DC',
+      driverType: 'CV',
+      locationRating: 'Dry Location',
+      ipRating: 'IP20',
+      finish: ['Black', 'White', 'Silver', 'Bronze']
     },
     features: [
       'Variable beam angle control',
@@ -167,8 +187,9 @@ export const microSeriesProducts: Product[] = [
       cri: '>80',
       colorTemp: '3000K - 4000K',
       voltage: '120V',
-      dimensions: '2" diameter',
-      mounting: 'Recessed',
+      driverType: 'CV',
+      locationRating: 'Wet Location',
+      ipRating: 'IP65',
       finish: ['White', 'Black', 'Brushed Nickel']
     },
     features: [
@@ -198,7 +219,8 @@ export const microSeriesProducts: Product[] = [
 ]
 
 // Extract unique categories and applications for filtering
-export const categories = [...new Set(microSeriesProducts.map(p => p.category))]
+// Use mainCategories for the master list, or extract from products
+export const categories = mainCategories
 
 export const applications = [
   ...new Set(microSeriesProducts.flatMap(p => p.applications))

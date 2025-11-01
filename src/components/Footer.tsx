@@ -81,7 +81,7 @@ export default function Footer() {
               <li className="flex items-start gap-2 text-sm">
                 <MapPin className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div className="text-gray-400">
-                  Orange County, CA
+                  Anaheim, CA
                 </div>
               </li>
             </ul>
@@ -95,6 +95,9 @@ export default function Footer() {
               © {currentYear} Tokistar Lighting Incorporated. All Rights Reserved.
             </p>
             <div className="flex gap-6 text-sm">
+              <Link href="/sitemap" className="text-gray-400 hover:text-yellow-400 transition-colors">
+                Sitemap
+              </Link>
               <Link href="/privacy" className="text-gray-400 hover:text-yellow-400 transition-colors">
                 Privacy Policy
               </Link>
