@@ -42,7 +42,7 @@ export const microSeriesProducts: Product[] = [
     id: 'msp',
     name: 'MicroSpotlight',
     category: 'Micro Series',
-    subcategory: 'Accent Lighting',
+    subcategory: 'Showcase Lighting',
     description: 'The quality of light and superior craftsmanship of Micro Spotlight make it ideal for highlighting fine jewelry and valuable artifacts in showcases and displays.',
     applications: [
       'Museums & Galleries',
@@ -53,22 +53,22 @@ export const microSeriesProducts: Product[] = [
       'Architectural Accent'
     ],
     specifications: {
-      wattage: '3W - 12W',
-      lumens: '200 - 800',
-      beamAngle: '15° - 45°',
-      cri: '>90',
-      colorTemp: '3000K - 4000K',
-      voltage: '12V DC',
-      dimensions: '2.5" x 1.5"',
-      mounting: 'Track, Surface, Recessed',
-      finish: ['Black', 'White', 'Brushed Aluminum', 'Custom']
+      wattage: '1.2W',
+      lumens: '80 - 97',
+      beamAngle: '16°, 24°, 30°',
+      cri: '>85',
+      colorTemp: '27K - 50K',
+      voltage: '5V DC',
+      dimensions: '12.5mm x 25mm',
+      mounting: 'Recessed Socket',
+      finish: ['Black', 'Silver']
     },
     features: [
-      'High CRI >90 for accurate color rendering',
       'Adjustable beam angle and focus',
       'Minimal heat generation',
       'Compact design for discrete installation',
       'Professional-grade LED drivers',
+      'High CRI >90 available',
       'Custom color temperatures available'
     ],
     images: {

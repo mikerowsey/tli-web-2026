@@ -36,12 +36,11 @@ export default function ModernProductGuide() {
       <div className="bg-white border-b border-neutral-200">
         <div className="container-custom py-8">
           <div className="text-center mb-8">
-            <h1 className="heading-2 mb-4">
-              Interactive <span className="gradient-text">Product Selection Guide</span>
+            <h1 className="heading-2 mb-4 text-primary-600">
+              Product Selection Guide
             </h1>
             <p className="body-large text-neutral-600 max-w-3xl mx-auto">
-              Explore our complete Micro Series catalog with advanced search and filtering. 
-              Find the perfect lighting solution for your project.
+              Explore our complete catalog and find the perfect lighting solution for your project.
             </p>
           </div>
           
@@ -58,78 +57,54 @@ export default function ModernProductGuide() {
               />
             </div>
             
-            <div className="flex justify-center">
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className="inline-flex items-center gap-2 px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
-              >
-                <Filter className="h-4 w-4" />
-                Advanced Filters
-                {(selectedCategory !== 'all' || selectedApplication !== 'all') && (
-                  <span className="bg-primary-500 text-white text-xs px-2 py-1 rounded-full">
-                    Active
-                  </span>
-                )}
-              </button>
-            </div>
-            
-            <AnimatePresence>
-              {showFilters && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="bg-neutral-100 rounded-lg p-6 space-y-4"
+            <div className="bg-neutral-100 rounded-lg p-6 space-y-4 max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Category
+                  </label>
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  >
+                    <option value="all">All Categories</option>
+                    {categories.map(category => (
+                      <option key={category} value={category}>{category}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Application
+                  </label>
+                  <select
+                    value={selectedApplication}
+                    onChange={(e) => setSelectedApplication(e.target.value)}
+                    className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  >
+                    <option value="all">All Applications</option>
+                    {applications.map(app => (
+                      <option key={app} value={app}>{app}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    setSelectedCategory('all')
+                    setSelectedApplication('all')
+                    setSearchTerm('')
+                  }}
+                  className="px-4 py-2 text-sm text-neutral-600 hover:text-neutral-800 transition-colors"
                 >
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        Category
-                      </label>
-                      <select
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                        className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      >
-                        <option value="all">All Categories</option>
-                        {categories.map(category => (
-                          <option key={category} value={category}>{category}</option>
-                        ))}
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        Application
-                      </label>
-                      <select
-                        value={selectedApplication}
-                        onChange={(e) => setSelectedApplication(e.target.value)}
-                        className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
-                      >
-                        <option value="all">All Applications</option>
-                        {applications.map(app => (
-                          <option key={app} value={app}>{app}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => {
-                        setSelectedCategory('all')
-                        setSelectedApplication('all')
-                        setSearchTerm('')
-                      }}
-                      className="px-4 py-2 text-sm text-neutral-600 hover:text-neutral-800 transition-colors"
-                    >
-                      Clear All Filters
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  Clear All Filters
+                </button>
+              </div>
+            </div>
           </div>
           
           {/* Results Summary */}
@@ -160,19 +135,23 @@ export default function ModernProductGuide() {
                 <div className="relative h-56 overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10" />
                   <div className="absolute top-4 right-4 z-20">
-                    <span className="bg-primary-500 text-white text-xs px-2 py-1 rounded-full">
+                    <span className="bg-white text-primary-700 font-medium text-xs px-2 py-1 rounded-full">
                       {product.subcategory}
                     </span>
                   </div>
-                  <div className="w-full h-full bg-neutral-200 flex items-center justify-center">
-                    <Zap className="h-16 w-16 text-neutral-400" />
-                  </div>
+                  <Image 
+                    src={product.images.main}
+                    alt={product.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                   <div className="absolute bottom-4 left-4 z-20">
                     <h3 className="text-xl font-display font-semibold text-white mb-1">
                       {product.name}
                     </h3>
                     <p className="text-neutral-200 text-sm">
-                      {product.specifications.wattage} • {product.specifications.lumens}
+                      {product.specifications.wattage} • {product.specifications.lumens} lm
                     </p>
                   </div>
                 </div>
@@ -226,7 +205,7 @@ export default function ModernProductGuide() {
                   </div>
 
                   <div className="flex gap-2 pt-4 border-t border-neutral-100">
-                    <button className="flex-1 px-3 py-2 bg-primary-500 hover:bg-primary-600 text-white text-sm font-medium rounded-md transition-colors duration-200 flex items-center justify-center gap-2">
+                    <button className="flex-1 px-3 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-md transition-colors duration-200 flex items-center justify-center gap-2">
                       <Eye className="h-3 w-3" />
                       View Details
                     </button>
@@ -303,9 +282,13 @@ export default function ModernProductGuide() {
                   {/* Product Image and Description */}
                   <div className="space-y-6">
                     <div className="relative h-80 bg-neutral-100 rounded-lg overflow-hidden">
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Zap className="h-24 w-24 text-neutral-400" />
-                      </div>
+                      <Image 
+                        src={selectedProduct.images.main}
+                        alt={selectedProduct.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
                     </div>
                     
                     <div>

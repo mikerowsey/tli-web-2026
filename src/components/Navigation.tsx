@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Lightbulb } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navigation = [
@@ -24,11 +25,15 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center gap-2 text-xl font-bold text-gray-900">
-              <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
-                <Lightbulb className="w-5 h-5 text-white" />
-              </div>
-              Tokistar Lighting
+            <Link href="/" className="flex items-center">
+              <Image 
+                src="/tokistar_menu_image.png" 
+                alt="Tokistar Lighting" 
+                width={180}
+                height={40}
+                priority
+                className="h-10 w-auto"
+              />
             </Link>
           </div>
 
