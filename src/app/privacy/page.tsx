@@ -13,7 +13,7 @@ export default function PrivacyPage() {
           <div className="prose prose-neutral max-w-none">
             <h2 className="text-2xl font-semibold text-neutral-900 mt-8 mb-4">Introduction</h2>
             <p className="text-neutral-700 mb-4">
-              Tokistar Lighting Incorporated ("we," "our," or "us") respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.
+              Tokistar Lighting Incorporated (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website.
             </p>
 
             <h2 className="text-2xl font-semibold text-neutral-900 mt-8 mb-4">Information We Collect</h2>
@@ -92,14 +92,14 @@ export default function PrivacyPage() {
               Our website may contain links to third-party websites. We are not responsible for the privacy practices of these external sites. We encourage you to review their privacy policies.
             </p>
 
-            <h2 className="text-2xl font-semibold text-neutral-900 mt-8 mb-4">Children's Privacy</h2>
+            <h2 className="text-2xl font-semibold text-neutral-900 mt-8 mb-4">Children&apos;s Privacy</h2>
             <p className="text-neutral-700 mb-4">
               Our website is not directed to individuals under the age of 18. We do not knowingly collect personal information from children.
             </p>
 
             <h2 className="text-2xl font-semibold text-neutral-900 mt-8 mb-4">Changes to This Privacy Policy</h2>
             <p className="text-neutral-700 mb-4">
-              We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page with an updated "Last Updated" date.
+              We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page with an updated &quot;Last Updated&quot; date.
             </p>
 
             <h2 className="text-2xl font-semibold text-neutral-900 mt-8 mb-4">Contact Us</h2>
